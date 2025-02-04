@@ -1,4 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b258pbtyy8u0w"]
+[gd_scene load_steps=27 format=3 uid="uid://b258pbtyy8u0w"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_cx3b8"]
+[ext_resource type="Shader" uid="uid://bdqhsj64hsj0k" path="res://shader/fire_shader.tres" id="2_64xtv"]
+[ext_resource type="Texture2D" uid="uid://dh2evd4l066k" path="res://assets/fire/T_1_pixel.jpg" id="3_1jaoq"]
+[ext_resource type="Texture2D" uid="uid://cup46w4l0v87" path="res://assets/fire/T_VFX_Noise_465.png" id="3_et6wh"]
+[ext_resource type="Texture2D" uid="uid://br364os7jsosb" path="res://assets/fire/T_Gradient_circle22.jpg" id="4_xsdgr"]
+[ext_resource type="Texture2D" uid="uid://b642o6ovo22dr" path="res://assets/player/children-different-positions-isolated-white-background.png" id="6_46d7x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2lk0f"]
 radius = 8.0
@@ -6,8 +13,117 @@ height = 32.0
 
 [sub_resource type="CurveTexture" id="CurveTexture_htevy"]
 
-[node name="Player" type="RigidBody2D"]
-metadata/_edit_group_ = true
+[sub_resource type="Gradient" id="Gradient_ggjuo"]
+offsets = PackedFloat32Array(0.0444894, 0.602629, 0.921132, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.815376, 0.29987, 0.138142, 1, 1, 0.670333, 0.14, 1, 1, 0.88, 0.1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_25anl"]
+gradient = SubResource("Gradient_ggjuo")
+
+[sub_resource type="Gradient" id="Gradient_kny3v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_luu1m"]
+gradient = SubResource("Gradient_kny3v")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 0.367521)
+
+[sub_resource type="Gradient" id="Gradient_3laoh"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q5tcd"]
+gradient = SubResource("Gradient_3laoh")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6saf"]
+shader = ExtResource("2_64xtv")
+shader_parameter/Scale = Vector2(1, 1)
+shader_parameter/Speed = Vector2(0.2, 1)
+shader_parameter/Texture_Main = ExtResource("3_et6wh")
+shader_parameter/texture_add = SubResource("GradientTexture2D_q5tcd")
+shader_parameter/Texture_Multiply = ExtResource("4_xsdgr")
+shader_parameter/Texture_Substract = SubResource("GradientTexture2D_luu1m")
+shader_parameter/Texture_Color_1D = SubResource("GradientTexture1D_25anl")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7532q"]
+size = Vector2(23.125, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r570r"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(706, 9, 341, 621)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl1sj"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(22, 1269, 338, 630)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_367bl"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(700, 9, 338, 621)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7m57y"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(22, 9, 360, 614)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8l42"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(382, 9, 360, 614)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnnk1"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(704, 9, 340, 621)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eu5oj"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(1021, 9, 333, 610)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bk3kx"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(1342, 9, 330, 610)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prsaw"]
+atlas = ExtResource("6_46d7x")
+region = Rect2(1667, 9, 328, 640)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_od520"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r570r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vl1sj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_367bl")
+}],
+"loop": true,
+"name": &"standing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7m57y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8l42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnnk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eu5oj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bk3kx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prsaw")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cx3b8")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -25,3 +141,37 @@ polygon = PackedVector2Array(-1.69995e-06, -0.322087, 4.75342, -0.214725, 4.7534
 position = Vector2(0, -24)
 color = Color(0.890196, 0.964706, 0.317647, 0.835294)
 polygon = PackedVector2Array(-8, -8, -16, 0, 16, 0, 8, -8)
+
+[node name="JumpCooldown" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 80)
+collide_with_areas = true
+
+[node name="FireEffect" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_h6saf")
+position = Vector2(2, -40)
+scale = Vector2(128, 180.965)
+texture = ExtResource("3_1jaoq")
+
+[node name="ArmContainer" type="Area2D" parent="."]
+position = Vector2(0, -8)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Arm" type="CollisionShape2D" parent="ArmContainer"]
+position = Vector2(27.5, 0)
+shape = SubResource("RectangleShape2D_7532q")
+debug_color = Color(0, 0.0595, 0.07, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+scale = Vector2(0.12, 0.12)
+sprite_frames = SubResource("SpriteFrames_od520")
+animation = &"standing"
+frame_progress = 0.107434
+
+[connection signal="timeout" from="JumpCooldown" to="." method="_on_jump_cooldown_timeout"]

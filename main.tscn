@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://c4l4llkksynum"]
+[gd_scene load_steps=4 format=3 uid="uid://c4l4llkksynum"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_0dohy"]
+[ext_resource type="PackedScene" uid="uid://b258pbtyy8u0w" path="res://scenes/player.tscn" id="1_mbd65"]
+[ext_resource type="PackedScene" uid="uid://48uwh8x6dc6n" path="res://scenes/platform.tscn" id="2_lices"]
 
 [node name="Main" type="Node"]
+physics_interpolation_mode = 1
+script = ExtResource("1_0dohy")
+
+[node name="Player" parent="." instance=ExtResource("1_mbd65")]
+position = Vector2(733, 519)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-1, 35)
+
+[node name="Platform" parent="." instance=ExtResource("2_lices")]
+position = Vector2(735, 638)
